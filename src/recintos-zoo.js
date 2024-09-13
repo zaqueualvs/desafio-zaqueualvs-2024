@@ -46,7 +46,7 @@ class RecintosZoo {
     let recintosViaveis = [];
 
     for (const recinto of this.recintos) {
-      const espacoOcupado = this.calcularEspacoOcupado(recinto.animais);
+      const espacoOcupado = this.calcularEspacoOcupado(recinto.animais, animal);
       const espacoLivre = recinto.tamanho - espacoOcupado;
 
       if (!this.testarBioma(anml, recinto)) {
@@ -60,8 +60,7 @@ class RecintosZoo {
         continue;
       }
 
-      const aux = this.calculaEspacoDiferenteEspecie(recinto, animal);
-      const espacoFinal = espacoLivre - tamanhoTotal - aux;
+      const espacoFinal = espacoLivre - tamanhoTotal;
       recintosViaveis.push(
         `Recinto ${recinto.numero} (espaço livre: ${espacoFinal} total: ${recinto.tamanho})`
       );
@@ -74,22 +73,13 @@ class RecintosZoo {
     return { recintosViaveis };
   }
 
-  calcularEspacoOcupado(animais) {
+  calcularEspacoOcupado(animais, especieAnimal) {
     let espaco = 0;
     for (const animal of animais) {
       espaco += animal.tamanho * animal.quantidade;
+      espaco += especieAnimal !== animal.especie ? 1 : 0;
     }
     return espaco;
-  }
-
-  calculaEspacoDiferenteEspecie(recinto, animal) {
-    if (
-      recinto.animais.length === 0 ||
-      recinto.animais[0]?.especie === animal
-    ) {
-      return 0;
-    }
-    return 1;
   }
 
   testarBioma(animal, recinto) {
