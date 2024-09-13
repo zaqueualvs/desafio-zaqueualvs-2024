@@ -65,7 +65,6 @@ class RecintosZoo {
       recintosViaveis.push(
         `Recinto ${recinto.numero} (espaço livre: ${espacoFinal} total: ${recinto.tamanho})`
       );
-      console.log(`${recintosViaveis.length} - ${animal} - ${recinto.numero}`);
     }
 
     if (recintosViaveis.length === 0) {
@@ -106,13 +105,12 @@ class RecintosZoo {
   }
 
   verificarConvivencia(recinto, novoAnimal, quantidade, especieNovoAnimal) {
-    const isCarnivoro = novoAnimal.carnivoro;
     for (const animal of recinto.animais) {
       const especieExistente = this.animais[animal.especie];
-      if (isCarnivoro && animal.especie !== especieNovoAnimal) {
-        return false;
-      }
-      if (especieExistente.carnivoro && animal.especie !== especieNovoAnimal) {
+      if (
+        (novoAnimal.carnivoro || especieExistente.carnivoro) &&
+        animal.especie !== especieNovoAnimal
+      ) {
         return false;
       }
     }
