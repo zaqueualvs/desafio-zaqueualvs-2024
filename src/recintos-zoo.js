@@ -79,9 +79,6 @@ class RecintosZoo {
     for (const animal of animais) {
       espaco += animal.tamanho * animal.quantidade;
     }
-    if (animais.length > 1) {
-      espaco += 1;
-    }
     return espaco;
   }
 
